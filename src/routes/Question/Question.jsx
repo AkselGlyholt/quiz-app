@@ -69,10 +69,11 @@ const Question = () => {
       }
     };
 
-    setCurrentNumber(0);
-    setAnswered(false);
-    fetch();
-  }, [category, difficulty]);
+    if (currentNumber === 0) {
+      setAnswered(false);
+      fetch();
+    }
+  }, [category, difficulty, currentNumber]);
 
   useEffect(() => {
     if (questions.length > 0 && currentQuestion) {
@@ -88,25 +89,27 @@ const Question = () => {
         setAnswers(shuffledArr);
       }
     }
-  }, [currentNumber, questions]);
+  }, [currentNumber, questions, currentQuestion]);
 
   const submit = (clickedButton, answer) => {
     const correctAnswer = currentQuestion.correct_answer;
     setAnswered(true);
-    
+
     if (correctAnswer === answer) {
       setStats((prevStats) => ({
         ...prevStats,
         correct: prevStats.correct + 1,
       }));
-      clickedButton.classList.add("correct")
+      clickedButton.classList.add("correct");
     } else {
       setStats((prevStats) => ({
         ...prevStats,
         wrong: prevStats.wrong + 1,
       }));
-      document.getElementById(correctAnswer.replace(" ", "-")).classList.add("right-answer")
-      clickedButton.classList.add("wrong")
+      document
+        .getElementById(correctAnswer.replace(" ", "-"))
+        .classList.add("right-answer");
+      clickedButton.classList.add("wrong");
     }
   };
 
@@ -117,20 +120,20 @@ const Question = () => {
       return;
     }
 
-    const wrong = document.querySelector(".wrong")
-    const correct = document.querySelector(".correct")
-    const rightAnswer = document.querySelector(".right-answer")
+    const wrong = document.querySelector(".wrong");
+    const correct = document.querySelector(".correct");
+    const rightAnswer = document.querySelector(".right-answer");
 
     if (wrong) {
-      wrong.classList.remove("wrong")
+      wrong.classList.remove("wrong");
     }
 
     if (correct) {
-      correct.classList.remove("correct")
+      correct.classList.remove("correct");
     }
 
     if (rightAnswer) {
-      rightAnswer.classList.remove("right-answer")
+      rightAnswer.classList.remove("right-answer");
     }
 
     setAnswered(false);
@@ -164,12 +167,11 @@ const Question = () => {
             </p>
             <div className="question__info--container">
               <p className="question__info">
-                <b>Category:</b>{" "}
-                {category || decodeHTMLEntities(currentQuestion.category)}
+                <b>Category:</b> {decodeHTMLEntities(currentQuestion.category)}
               </p>
               <p className="question__info">
                 <b>Difficulty: </b>
-                {difficulty || decodeHTMLEntities(currentQuestion.difficulty)}
+                {decodeHTMLEntities(currentQuestion.difficulty)}
               </p>
             </div>
             <div className="answers--container">
