@@ -1,0 +1,31 @@
+.settings--container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.settings__options--container {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-bottom: 40px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin: 8px 12px;
+}
+
+.setting__title {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+select {
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 16px;
+}
